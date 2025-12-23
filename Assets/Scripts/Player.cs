@@ -1,14 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+
+    public event EventHandler <OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs
+    {
+        public ClearCounter selectedCounter;
+    }
+
+
     [SerializeField]private float moveSpeed = 7.0f;
     [SerializeField]private GameInput gameInput;
     [SerializeField]private LayerMask countersLayerMask;
     private bool isMoving = false;
     private Vector3 lastInteractDirc;
+    private ClearCounter selectedCounter;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("There is more than one Player instance");
+        }
+        Instance = this;
+    }
     private void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
@@ -16,21 +36,10 @@ public class Player : MonoBehaviour
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
-        Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
-        if (moveDir != Vector3.zero)
+    if (selectedCounter != null)
         {
-            lastInteractDirc = moveDir;
+            selectedCounter.Interact();
         }
-        float interactionDistance = 2.0f;
-        if (Physics.Raycast(transform.position, lastInteractDirc, out RaycastHit raycastHit, interactionDistance, countersLayerMask))
-        {
-            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
-            {
-                clearCounter.Interact();
-            }
-        }
-
     }
 
     private void Update()
@@ -50,7 +59,16 @@ public class Player : MonoBehaviour
         {
             lastInteractDirc = moveDir;
         }
-
+        float interactionDistance = 2.0f;
+        if (Physics.Raycast(transform.position, lastInteractDirc, out RaycastHit raycastHit, interactionDistance, countersLayerMask))
+        {
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            {
+                SetSlectedCounter(clearCounter);
+            }
+            else { SetSlectedCounter(null); }
+        }
+        else { SetSlectedCounter(null); }
     }
     private void HandleMovement()
     {
@@ -85,5 +103,13 @@ public class Player : MonoBehaviour
         isMoving = moveDir != Vector3.zero;
         float rotationSpeed = 10.0f;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotationSpeed);
+    }
+    private void SetSlectedCounter(ClearCounter selectedCounter)
+    {
+        this.selectedCounter = selectedCounter;
+        if (OnSelectedCounterChanged != null)
+        {
+            OnSelectedCounterChanged(this, new OnSelectedCounterChangedEventArgs { selectedCounter = selectedCounter });
+        }
     }
 }
