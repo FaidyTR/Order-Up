@@ -1,30 +1,118 @@
 using UnityEngine;
-
+using System;
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+    public event EventHandler <OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs
+    {
+        public ClearCounter selectedCounter;
+    }
+    [SerializeField] private GameInput gameInput;
     [SerializeField] private float PlayerMoveSpeed = 7f;
+    [SerializeField] private LayerMask countersLayerMask;
+    private ClearCounter selecterCounter;
+    private Vector3 lastInteractDirection;
     private bool isWalking;
+    
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("There is more than one Player");
+        }
+        Instance = this;
+    }
+    private void Start()
+    {
+        gameInput.OnInteractAction += GameInput_OnInteractAction;
+    }
+    private void GameInput_OnInteractAction(object sender, System.EventArgs e)
+    {
+        if (selecterCounter != null) { selecterCounter.Interact(); }
+    }
     private void Update()
     {
-        MovePlayer();
+        HandleMovement();
+        HandleInteraction();
     }
-    private void MovePlayer()
+    private void HandleInteraction()
     {
-        Vector2 inputVector = Vector2.zero;
-        if (Input.GetKey(KeyCode.W)) { inputVector.y += 1; }
-        if (Input.GetKey(KeyCode.S)) { inputVector.y -= 1; }
-        if (Input.GetKey(KeyCode.D)) { inputVector.x += 1; }
-        if (Input.GetKey(KeyCode.A)) { inputVector.x -= 1; }
-        Vector3 directionVector = new Vector3(inputVector.x, 0, inputVector.y).normalized;
-        transform.position += directionVector * Time.deltaTime * PlayerMoveSpeed;
-        isWalking = directionVector != Vector3.zero;
-        float rotateSpeed = 10f;
-        transform.forward = Vector3.Slerp(transform.forward, directionVector, Time.deltaTime * rotateSpeed);
+        Vector2 inputVector = gameInput.GetInputVector().normalized;
+        Vector3 directionVector = new Vector3(inputVector.x, 0, inputVector.y);
+        float InteractDistance = 2f;
+
+        if (directionVector != Vector3.zero)
+        {
+            lastInteractDirection = directionVector;
+        }
+        if (Physics.Raycast(transform.position, lastInteractDirection, out RaycastHit raycastHit, InteractDistance, countersLayerMask))
+        {
+            if (raycastHit.transform.TryGetComponent<ClearCounter>(out ClearCounter clearCounter))
+            {
+                if (clearCounter != selecterCounter)
+                {
+                    selecterCounter = clearCounter;
+                }
+            } else { selecterCounter = null;}
+        } else { selecterCounter = null; }
+        SetSelectedCounter(selecterCounter);
+    }
+    private void HandleMovement() 
+    {
+        Vector2 inputVector = gameInput.GetInputVector().normalized;
+        Vector3 directionVector = new Vector3(inputVector.x, 0, inputVector.y);
+        float playerHeight = 2f;
+        float playerRadius = .7f;
+      
+        float moveDistance = Time.deltaTime * PlayerMoveSpeed;
+        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, 
+            playerRadius, directionVector, moveDistance);
+        if (!canMove )
+        {
+            Vector3 directionVectorX = new Vector3(directionVector.x, 0, 0);
+            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, 
+                playerRadius, directionVectorX, moveDistance);
+            if (canMove)
+            {
+                directionVector = directionVectorX.normalized;
+            }
+            else
+            {
+                Vector3 directionVectorZ= new Vector3(0, 0, directionVector.z);
+                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, 
+                    playerRadius, directionVectorZ, moveDistance);
+                if (canMove)
+                {
+                    directionVector = directionVectorZ.normalized;
+                }
+            }
+        }
+        if (canMove)
+        {
+            transform.position += directionVector * moveDistance;
+            isWalking = directionVector != Vector3.zero;
+            float rotateSpeed = 10f;
+            transform.forward = Vector3.Slerp(transform.forward, directionVector, Time.deltaTime * rotateSpeed);
+
+        }
+        
     }
     public bool IsWalking()
     {
         return isWalking;
 
+    }
+    private void SetSelectedCounter(ClearCounter selectedCounter)
+    {
+        this.selecterCounter = selectedCounter;
+        if (OnSelectedCounterChanged != null)
+        {
+            OnSelectedCounterChanged(this, new OnSelectedCounterChangedEventArgs
+            {
+                selectedCounter = selecterCounter
+            });
+        }
     }
 }
 
