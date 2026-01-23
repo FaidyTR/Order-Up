@@ -10,5 +10,6 @@ public class ClearCounter : MonoBehaviour
         Debug.Log("Interacted with " + gameObject.transform);
         Transform tomaotoSpawned = Instantiate(TomatoPrefab, TopPointSpawn);
         tomaotoSpawned.localPosition = Vector3.zero;
+        //hello 
     }
 }
