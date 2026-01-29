@@ -11,12 +11,9 @@ public class ContainerCounter : BaseCounter
     {
         if (!player.HasKitchenObject())
         {
-            Transform kitchenObjectSpawned = Instantiate(kitchenObjectSO.Prefab);
-            kitchenObjectSpawned.localPosition = Vector3.zero;
             containerCounterVisual.OpenContainerAnimation();
 
-            kitchenObjectSpawned.GetComponent<KitchenObject>().SetKitchenObjectParent(player);
-
+            KitchenObject.SpawnKitchenObject(kitchenObjectSO, player);
         }
 
     }

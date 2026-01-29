@@ -8,6 +8,10 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     {
         Debug.LogError("BaseContainer Interact!");
     }
+    public virtual void InteractAlternate(IKitchenObjectParent kitchenObjectParent)
+    {
+        Debug.LogError("BaseContainer InteractAlternate!");
+    }
     public Transform GetTransformPosition()
     {
         return TopPointSpawn;
