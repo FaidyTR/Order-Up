@@ -1,0 +1,10 @@
+using UnityEngine;
+
+[CreateAssetMenu()]
+public class FryingRecipeSO: ScriptableObject
+{
+    public KitchenObjectSO Input;
+    public KitchenObjectSO Output;
+    public int fryingTimeMax;
+
+}

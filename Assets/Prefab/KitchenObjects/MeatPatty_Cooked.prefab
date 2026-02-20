@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1687655583630547747}
   - component: {fileID: -323695661517150321}
   m_Layer: 0
-  m_Name: Cabbage
+  m_Name: MeatPatty_Cooked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6470699706581966919}
+  - {fileID: 4028833300532956269}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-323695661517150321
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5feba1aecccb144e8eda351a59ce4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenObject
-  kitchenObjectSO: {fileID: 11400000, guid: 98b0ab3d722b3aa40821de98ff7b9729, type: 2}
---- !u!1001 &7865119014525236935
+  kitchenObjectSO: {fileID: 11400000, guid: 99a5a7eaa88a57247a905836ec569e89, type: 2}
+--- !u!1001 &217093629719649005
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -54,69 +54,69 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1687655583630547747}
     m_Modifications:
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.06526
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.02242
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3812876574508226177, guid: 259702638197d9246bfc6f2b0fe88c09,
+    - target: {fileID: 3812876574508226177, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
         type: 3}
       propertyPath: m_Name
-      value: Cabbage_Visual
+      value: MeatPattyCooked_Visual
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 259702638197d9246bfc6f2b0fe88c09, type: 3}
---- !u!4 &6470699706581966919 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: e879ff1414d1dd64c9ad7b04bffdfaef, type: 3}
+--- !u!4 &4028833300532956269 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3812876574508226176, guid: 259702638197d9246bfc6f2b0fe88c09,
+  m_CorrespondingSourceObject: {fileID: 3812876574508226176, guid: e879ff1414d1dd64c9ad7b04bffdfaef,
     type: 3}
-  m_PrefabInstance: {fileID: 7865119014525236935}
+  m_PrefabInstance: {fileID: 217093629719649005}
   m_PrefabAsset: {fileID: 0}
