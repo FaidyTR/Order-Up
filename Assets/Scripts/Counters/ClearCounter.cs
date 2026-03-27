@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ClearCounter : BaseCounter 
+public class ClearCounter : BaseCounter
 {
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
 
@@ -15,25 +15,27 @@ public class ClearCounter : BaseCounter
         }
         else
         {
+            // Counter has an object
             if (!player.HasKitchenObject())
             {
+                // Player empty -> pick up from counter
                 GetKitchenObject().SetKitchenObjectParent(player);
             }
-            if (player.HasKitchenObject())
+            else
             {
-                if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
+                // Both have objects -> try to combine (add ingredients to plate)
+                // Try add counter object to player's plate
+                if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject playerPlate))
                 {
-                    if (plateKitchenObject != null && GetKitchenObject() != null)
+                    if (playerPlate.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
                     {
-                        if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
-                        {
-                            GetKitchenObject().DestroySelf();
-                        }
+                        GetKitchenObject().DestroySelf();
                     }
                 }
-                if(GetKitchenObject().TryGetPlate(out plateKitchenObject))
+                // Otherwise try add player's object to counter plate
+                else if (GetKitchenObject().TryGetPlate(out PlateKitchenObject counterPlate))
                 {
-                    if (plateKitchenObject.TryAddIngredient(player.GetKitchenObject().GetKitchenObjectSO()))
+                    if (counterPlate.TryAddIngredient(player.GetKitchenObject().GetKitchenObjectSO()))
                     {
                         player.GetKitchenObject().DestroySelf();
                     }
@@ -42,5 +44,4 @@ public class ClearCounter : BaseCounter
         }
 
     }
-
 }

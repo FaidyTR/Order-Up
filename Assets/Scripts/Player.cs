@@ -101,7 +101,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             transform.position += directionVector * moveDistance;
             isWalking = directionVector != Vector3.zero;
             float rotateSpeed = 10f;
-            transform.forward = Vector3.Slerp(transform.forward, directionVector, Time.deltaTime * rotateSpeed);
+            // Only rotate when we have a valid direction. Avoids "Look rotation viewing vector is zero" error
+            if (directionVector != Vector3.zero)
+            {
+                transform.forward = Vector3.Slerp(transform.forward, directionVector, Time.deltaTime * rotateSpeed);
+            }
 
         }
         
