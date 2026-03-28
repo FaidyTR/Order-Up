@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148fcb2aa626d3f498ea04becd917678, type: 3}
   m_Name: RecipiesList
   m_EditorClassIdentifier: Assembly-CSharp::RecipiesListSO
-  recipiesSOList: []
+  recipiesSOList:
+  - {fileID: 11400000, guid: 7e2fa01a554dc014ba99d0f698df8289, type: 2}
+  - {fileID: 11400000, guid: 94c9fcf1fbc81f0479a0999ebed1f5a8, type: 2}
+  - {fileID: 11400000, guid: 9e1a9e9300657d043bad68f660c1e873, type: 2}
+  - {fileID: 11400000, guid: 86ef5588b04d88c4c8926b9c8d0d46b4, type: 2}
