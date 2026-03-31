@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using System;
 
 public class BaseCounter : MonoBehaviour, IKitchenObjectParent
 {
     private KitchenObject kitchenObject;
+    public static EventHandler OnAnyObjectDroped;
     [SerializeField] private Transform TopPointSpawn;
     public virtual void Interact(IKitchenObjectParent kitchenObjectParent)
     {

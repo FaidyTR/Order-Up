@@ -4,6 +4,7 @@ using System;
 public class CuttingCounter : BaseCounter,IHasProgress
 {
     public EventHandler OnCutAnimation;
+    public static  EventHandler OnAnyCut;
     public event EventHandler <IHasProgress.OnProgressChangedEventArgs> OnProgress;
     [SerializeField] private CuttingRecipesSO[] cuttingRecipesArray;
     private int cuttingProgress;
@@ -60,6 +61,7 @@ public class CuttingCounter : BaseCounter,IHasProgress
             {
                 OnCutAnimation(this, EventArgs.Empty);
             }
+            OnAnyCut?.Invoke(this, EventArgs.Empty);
 
             if (OnProgress != null)
             {

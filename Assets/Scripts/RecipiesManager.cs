@@ -13,6 +13,9 @@ public class RecipiesManager : MonoBehaviour
     private float waitingTimer = 2f;
     private int maxWaitingRecipies = 4;
 
+    public EventHandler OnRecipieDeliveredSuccess;
+    public EventHandler OnRecipieDeliveredWrong;
+
     private void Awake()
     {
         Instance = this;
@@ -44,9 +47,11 @@ public class RecipiesManager : MonoBehaviour
             {
                 waitingRecipies.RemoveAt(i);
                 OnRecipiesChanged?.Invoke(this, EventArgs.Empty);
+                OnRecipieDeliveredSuccess?.Invoke(this, EventArgs.Empty);
                 return;
             }
         }
+        OnRecipieDeliveredWrong?.Invoke(this, EventArgs.Empty);
     }
     private bool PlateKitchenObjectMatchWaitingRecipie(PlateKitchenObject plateKitchenObject, RecipieSO recipieSO)
     {

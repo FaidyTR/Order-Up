@@ -3,6 +3,7 @@ using System;
 public class Player : MonoBehaviour, IKitchenObjectParent
 {
     public static Player Instance { get; private set; }
+    public EventHandler OnPickSomething;
     public event EventHandler <OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs
     {
@@ -113,7 +114,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public bool IsWalking()
     {
         return isWalking;
-
     }
     private void SetSelectedCounter(BaseCounter selectedCounter)
     {
@@ -131,7 +131,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         return kitchenObjectHoldPoint;
     }
     public void SetKitchenObject(KitchenObject kitchenObject)
-    { this.kitchenObject = kitchenObject; }
+    { 
+        this.kitchenObject = kitchenObject; 
+        OnPickSomething?.Invoke(this, EventArgs.Empty);
+    }
     public KitchenObject GetKitchenObject()
     { return kitchenObject; }
     public bool HasKitchenObject()
