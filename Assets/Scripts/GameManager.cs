@@ -69,6 +69,11 @@ public class GameManager : MonoBehaviour
         if (state != State.CountdownToStart) return 0f;
         return ( timer );
     }
+    public float GetGamePlayingTimer()
+    {
+        if (state != State.GamePlaying) return 0f;
+        return ( timer / gamePlayingTimer);
+    }
     public bool GetStateIsGameOver()
     {
         return state == State.GameOver;
