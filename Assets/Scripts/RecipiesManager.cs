@@ -12,6 +12,7 @@ public class RecipiesManager : MonoBehaviour
     private float timer;
     private float waitingTimer = 2f;
     private int maxWaitingRecipies = 4;
+    private int recipeDeliveredSuccessCount;
 
     public EventHandler OnRecipieDeliveredSuccess;
     public EventHandler OnRecipieDeliveredWrong;
@@ -45,6 +46,7 @@ public class RecipiesManager : MonoBehaviour
         {
             if(PlateKitchenObjectMatchWaitingRecipie(plateKitchenObject, waitingRecipies[i]))
             {
+                recipeDeliveredSuccessCount++;
                 waitingRecipies.RemoveAt(i);
                 OnRecipiesChanged?.Invoke(this, EventArgs.Empty);
                 OnRecipieDeliveredSuccess?.Invoke(this, EventArgs.Empty);
@@ -78,5 +80,8 @@ public class RecipiesManager : MonoBehaviour
     {
         return waitingRecipies;
     }
-
+    public int GetRecipeDeliveredSuccessCount()
+    {
+        return recipeDeliveredSuccessCount;
+    }
 }
