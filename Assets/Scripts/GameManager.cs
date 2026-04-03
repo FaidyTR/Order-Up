@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     public enum State
     {
         WaitingToStart,
@@ -11,7 +13,7 @@ public class GameManager : MonoBehaviour
         GameOver
     }
 
-    private EventHandler OnStateChanged;
+    public EventHandler OnStateChanged;
     private State state;
     private float timer;
     private float waitingToStartTimer = 1f;
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         state = State.WaitingToStart;
+
+        Instance = this;
     }
     private void Update()
     {
@@ -51,5 +55,19 @@ public class GameManager : MonoBehaviour
             timer = 0f;
             state = nextState;
         }
+        Debug.Log(timer);
+    }
+    public bool GetStateIsCountdownToStart()
+    {
+        return state == State.CountdownToStart;
+    }
+    public bool GetStateIsGamePlaying()
+    {
+        return state == State.GamePlaying;
+    }
+    public float GetCountDownToStartTimer()
+    {
+        if (state != State.CountdownToStart) return 0f;
+        return ( timer );
     }
 }
