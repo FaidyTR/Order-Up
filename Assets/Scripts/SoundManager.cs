@@ -2,11 +2,19 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    private const string PlayerPref_SOUND_EFFECT_VOLUME = "SoundEffectVolume";
+
     [SerializeField] private SoundEffects soundEffects;
     public static SoundManager Instance { get; private set; }
+
+    private float volume;
+
     private void Awake()
     {
         Instance = this;
+
+        volume = PlayerPrefs.GetFloat(PlayerPref_SOUND_EFFECT_VOLUME, 1f);
+        StorveCounterSound.Instance.UpdateSoundVolume(volume);
     }
 
     private void Start()
@@ -17,6 +25,7 @@ public class SoundManager : MonoBehaviour
         TrashCounter.OnAnyObjectTrashed += TrashCounter_OnAnyTrashed;
         Player.Instance. OnPickSomething += Player_OnPickSomething;
         BaseCounter.OnAnyObjectDroped += BaseCounter_OnAnyObjectDroped;
+
     }
     private void BaseCounter_OnAnyObjectDroped(object sender, System.EventArgs e)
     {
@@ -61,11 +70,25 @@ public class SoundManager : MonoBehaviour
     private void PlaySound(AudioClip audioClip, Vector3 sourceposition, float volume = 1)
     {
         if (audioClip == null) return;
-        AudioSource.PlayClipAtPoint(audioClip, sourceposition, volume);
+        AudioSource.PlayClipAtPoint(audioClip, sourceposition, this.volume);
     }
 
     public void PlayFootstepsSound(Vector3 sourcePosition, float volume = 1)
     {
-        PlaySoundArray(soundEffects.Footsteps, sourcePosition, volume);
+        PlaySoundArray(soundEffects.Footsteps, sourcePosition, this.volume);
+    }
+
+    public void UpdateSoundEffectVolume()
+    {
+        volume += .1f;
+        if (volume > 1f) { volume = 0f; } 
+        StorveCounterSound.Instance.UpdateSoundVolume(volume);
+
+        PlayerPrefs.SetFloat(PlayerPref_SOUND_EFFECT_VOLUME, volume);
+        PlayerPrefs.Save();
+    }
+    public float GetSoundEffectVolume()
+    {
+        return volume;
     }
 }
