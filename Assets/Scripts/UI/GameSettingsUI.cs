@@ -14,8 +14,6 @@ public class GameSettingsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI musicVolumeTxt;
     [SerializeField] private TextMeshProUGUI soundEffectTxt;
 
-    private float musicVolume;
-    private float soundEffectVolume;
 
     private void Awake()
     {
