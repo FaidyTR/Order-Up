@@ -9,7 +9,10 @@ public class CuttingCounter : BaseCounter,IHasProgress
     [SerializeField] private CuttingRecipesSO[] cuttingRecipesArray;
     private int cuttingProgress;
 
-
+    public static void ResetStaticData()
+    {
+        OnAnyCut = null;
+    }
     public override void Interact(IKitchenObjectParent player)
     {
         if (!HasKitchenObject())

@@ -7,6 +7,11 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     private KitchenObject kitchenObject;
     public static EventHandler OnAnyObjectDroped;
     [SerializeField] private Transform TopPointSpawn;
+
+    public static void ResetStaticData()
+    {
+        OnAnyObjectDroped = null;
+    }
     public virtual void Interact(IKitchenObjectParent kitchenObjectParent)
     {
         Debug.LogError("BaseContainer Interact!");

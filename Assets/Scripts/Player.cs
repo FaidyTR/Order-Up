@@ -33,12 +33,12 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     }
     private void GameInput_OnInteractAlternateEvent(object sender, System.EventArgs e)
     {
-        if (!GameManager.Instance.GetStateIsGamePlaying()) return;
+        if (!GameManager.Instance.GetStateIsGamePlaying() || GameManager.Instance.GetIsGamePaused()) return;
         if (selecterCounter != null) { selecterCounter.InteractAlternate(this); }
     }
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
-        if (!GameManager.Instance.GetStateIsGamePlaying()) return;
+        if (!GameManager.Instance.GetStateIsGamePlaying() || GameManager.Instance.GetIsGamePaused()) return;
         if (selecterCounter != null) { selecterCounter.Interact(this);}
     }
     private void Update()

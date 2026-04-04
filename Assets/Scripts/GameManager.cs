@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private float waitingToStartTimer = 1f;
     private float countdownToStartTimer = 3f;
     [SerializeField] private float gamePlayingTimer = 30f;
-
+    private bool isGamePaused = false;
     private void Awake()
     {
         state = State.WaitingToStart;
@@ -77,5 +77,21 @@ public class GameManager : MonoBehaviour
     public bool GetStateIsGameOver()
     {
         return state == State.GameOver;
+    }
+    public void PauseUnPauseGame()
+    {
+        if(state != State.GamePlaying) return;
+        if(isGamePaused)
+        {
+            isGamePaused = false;
+            Time.timeScale = 1f;
+            return;
+        }
+        isGamePaused = true;
+        Time.timeScale = 0f;
+    }
+    public bool GetIsGamePaused()
+    {
+        return isGamePaused;
     }
 }
