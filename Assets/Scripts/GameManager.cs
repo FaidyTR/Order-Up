@@ -18,13 +18,17 @@ public class GameManager : MonoBehaviour
     private float timer;
     private float waitingToStartTimer = 1f;
     private float countdownToStartTimer = 3f;
-    [SerializeField] private float gamePlayingTimer = 30f;
+    private float gamePlayingTimer;
     private bool isGamePaused = false;
     private void Awake()
     {
+        Instance = this;
         state = State.WaitingToStart;
 
-        Instance = this;
+    }
+    private void Start()
+    {
+        gamePlayingTimer = MainMenuSettingUI.Instance.GetGamePlayingTimer();
     }
     private void Update()
     {
@@ -69,7 +73,7 @@ public class GameManager : MonoBehaviour
         if (state != State.CountdownToStart) return 0f;
         return ( timer );
     }
-    public float GetGamePlayingTimer()
+    public float GetGamePlayingTimerNormiliezd()
     {
         if (state != State.GamePlaying) return 0f;
         return ( timer / gamePlayingTimer);
@@ -94,4 +98,9 @@ public class GameManager : MonoBehaviour
     {
         return isGamePaused;
     }
+    public float GetGamePlayingTimer()
+    {
+        return gamePlayingTimer;
+    }
+
 }
