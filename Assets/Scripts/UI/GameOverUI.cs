@@ -1,13 +1,25 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI RecipeDeliverdCountTxt;
     [SerializeField] private Transform GameoverScene;
+    [SerializeField] private Button ReplayBtn;
+    [SerializeField] private Button MainMenuBtn;
 
     private void Awake()
     {
+        ReplayBtn.onClick.AddListener(() =>
+        {
+            Loader.Load(Loader.Scene.GameScene);
+        });
+        MainMenuBtn.onClick.AddListener(() =>
+        {
+            Loader.Load(Loader.Scene.MainMenuScene);
+        });
+
         Hide();
     }
     private void Start()

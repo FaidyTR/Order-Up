@@ -10,10 +10,12 @@ public class GameSettingsUI : MonoBehaviour
     [SerializeField] private Button musicVolumeBtn;
     [SerializeField] private Button soundEffectVolumeBtn;
     [SerializeField] private Button backBtn;
+    [SerializeField] private Button playingTimeBtn;
 
     [SerializeField] private TextMeshProUGUI musicVolumeTxt;
     [SerializeField] private TextMeshProUGUI soundEffectTxt;
-
+    [SerializeField] private TextMeshProUGUI playingTimeTxt;
+    [SerializeField] private TextMeshProUGUI errorPlayingTimeTxt;
 
     private void Awake()
     {
@@ -33,6 +35,9 @@ public class GameSettingsUI : MonoBehaviour
         backBtn.onClick.AddListener(() => {
             Hide();
         });
+        playingTimeBtn.onClick.AddListener(() => {
+            PlayErrorPlayingTimeBtn();
+        });
     }
 
     private void Start()
@@ -45,6 +50,8 @@ public class GameSettingsUI : MonoBehaviour
     public void Show()
     {
         gameSettingsMenuUI.gameObject.SetActive(true);
+        errorPlayingTimeTxt.gameObject.SetActive(false);
+
     }
     public void Hide()
     {
@@ -54,6 +61,12 @@ public class GameSettingsUI : MonoBehaviour
     {
         soundEffectTxt.text = "SoundEffect volume: " + Mathf.CeilToInt(SoundManager.Instance.GetSoundEffectVolume() * 10);
         musicVolumeTxt.text = "Music volume: " + Mathf.CeilToInt(MusicManager.Instance.GetMusicVolume() * 10);
+        playingTimeTxt.text = "Playing time: " + Mathf.CeilToInt(GameManager.Instance.GetGamePlayingTimer()) + "s";
 
     }
+    private void PlayErrorPlayingTimeBtn()
+    {
+        errorPlayingTimeTxt.gameObject.SetActive(true);
+    }
+
 }

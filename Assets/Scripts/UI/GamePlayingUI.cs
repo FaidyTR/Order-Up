@@ -39,7 +39,7 @@ public class GamePlayingUI : MonoBehaviour
     {
         backGround.gameObject.SetActive(true);
         timerCount.gameObject.SetActive(true);
-        float timer = GameManager.Instance.GetGamePlayingTimer();
+        float timer = GameManager.Instance.GetGamePlayingTimerNormiliezd();
         timerCount.fillAmount = timer;
     }
 
